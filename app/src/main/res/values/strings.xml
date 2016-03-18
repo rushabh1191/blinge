@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Delivery Guy</string>
 
+    <string name="app_id">vqIxZZdXOejJCFsirV3DR6pHabU5N8cEK5n4tQEP</string>
+    <string name="client_id">DpYosXX6YZdfSBso6qbgnMpwSwV5JXS6SUTNDqs3</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
     <string name="prompt_password">Password</string>
@@ -14,4 +16,5 @@
         completions."
     </string>
     <string name="title_activity_blinge_base">BlingeBaseActivity</string>
+    <string name="title_activity_blinge_landing_page">BlingeLandingPage</string>
 </resources>

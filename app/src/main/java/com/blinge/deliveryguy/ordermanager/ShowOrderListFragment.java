@@ -2,6 +2,7 @@ package com.blinge.deliveryguy.ordermanager;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,7 @@ public class ShowOrderListFragment extends Fragment {
         type=bundle.getString(ARG_TYPE);
         status=bundle.getString(ARG_STATUS);
 
+        recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new OrderListAdapter(orderList,getActivity());
 
         recycleView.setAdapter(adapter);

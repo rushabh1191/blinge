@@ -21,6 +21,7 @@ public class OrderInformation extends ParseObject {
     String customerAddress;
     String orderStatus;
     String orderType;
+    private int productName;
 
     public String getCustomerName() {
         return getData("customerName");
@@ -70,5 +71,9 @@ public class OrderInformation extends ParseObject {
         }
 
         return null;
+    }
+
+    public String getProductName() {
+        return getData("orderName");
     }
 }

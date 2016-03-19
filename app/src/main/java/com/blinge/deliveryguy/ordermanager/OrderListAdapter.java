@@ -1,15 +1,13 @@
 package com.blinge.deliveryguy.ordermanager;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.blinge.deliveryguy.R;
-import com.blinge.deliveryguy.helpers.Logger;
+import com.blinge.deliveryguy.helpers.NameValueView;
 
 import java.util.ArrayList;
 
@@ -31,11 +29,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         orderInformationArrayList=orderInformations;
         inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view=inflater.inflate(R.layout.item_order_information,parent,false);
+        View view=inflater.inflate(R.layout.item_order_information, parent, false);
         OrderViewHolder holder=new OrderViewHolder(view);
+
         return holder;
     }
 
@@ -43,8 +43,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderViewHolder> {
     public void onBindViewHolder(OrderViewHolder holder, int position) {
 
         OrderInformation orderInformation=orderInformationArrayList.get(position);
-
-        holder.textView.setText(orderInformation.getCustomerName());
+        holder.tvCustomerName.setValue(orderInformation.getCustomerName());
+        holder.tvCustomerNumber.setValue(orderInformation.getCustomerNumber());
+        holder.tvCustomerAddress.setValue(orderInformation.getCustomerAddress());
+        holder.tvProductName.setValue(orderInformation.getProductName());
 
     }
 
@@ -56,8 +58,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
 class OrderViewHolder extends RecyclerView.ViewHolder{
 
-    @Bind(R.id.tv_order_name)
-    TextView textView;
+    @Bind(R.id.nv_order_customer_name)
+    NameValueView tvCustomerName;
+
+    @Bind(R.id.nv_customer_number)
+    NameValueView tvCustomerNumber;
+
+    @Bind(R.id.nv_customer_address)
+    NameValueView tvCustomerAddress;
+    @Bind(R.id.nv_product_name)
+    NameValueView tvProductName;
 
     public OrderViewHolder(View itemView) {
         super(itemView);

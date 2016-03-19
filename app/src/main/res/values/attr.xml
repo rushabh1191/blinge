@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NameValueView">
+        <attr name="name" format="string"/>
+        <attr name="value" format="string"/>
+        <attr name="name_drawable" format="reference"/>
+        <attr name="value_drawable" format="reference"/>
+        <attr name="nameTextColor" format="color"/>
+        <attr name="valueTextColor" format="color"/>
+        <attr name="nameTextSize" format="dimension"/>
+        <attr name="valueTextSize" format="dimension"/>
+        <attr name="valuePadding" format="dimension"/>
+        <attr name="namePadding" format="dimension"/>
+    </declare-styleable>
+</resources>

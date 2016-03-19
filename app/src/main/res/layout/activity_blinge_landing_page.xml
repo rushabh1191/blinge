@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".postlogin.BlingeLandingPage">
+    android:padding="10dp"
+    android:orientation="vertical">
 
+    <Button
+        android:id="@+id/btn_pending_delivery"
+        style="@style/landing_button"
+        android:text="Pending Deliveries" />
+
+    <Button
+        style="@style/landing_button"
+        android:id="@+id/btn_completed_delivery"
+        android:text="Completed Deliveries" />
+
+    <Button
+        style="@style/landing_button"
+        android:id="@+id/btn_pending_pickup"
+        android:text="Pending Pickups" />
+
+    <Button
+        style="@style/landing_button"
+        android:id="@+id/btn_completed_pickup"
+        android:text="Completed Pickups" />
 
 </LinearLayout>

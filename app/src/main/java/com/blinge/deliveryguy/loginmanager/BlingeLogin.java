@@ -1,5 +1,7 @@
 package com.blinge.deliveryguy.loginmanager;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.KeyEvent;
@@ -8,7 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blinge.deliveryguy.BlingeBaseActivity;
+import com.blinge.deliveryguy.helpers.ConfirmationWindow;
 import com.blinge.deliveryguy.R;
+import com.blinge.deliveryguy.ordermanager.BlingeLandingPage;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -75,13 +79,27 @@ public class BlingeLogin extends BlingeBaseActivity {
 
     void loginUserWithParse(String username,String password){
 
+        final ProgressDialog pd=ProgressDialog.show(this,"","Logging in...");
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
+                pd.dismiss();
                 if (e == null) {
+                    Intent intent= BlingeLandingPage.getIntentToStartThisActivity(BlingeLogin.this);
+                    finish();
+                    startActivity(intent);
 
                 } else {
 
+                    int statusCode = e.getCode();
+                    String message;
+                    if (statusCode == ParseException.CONNECTION_FAILED) {
+
+                        message = "Check your network connection";
+                    } else {
+                        message = "Invalid username or password";
+                    }
+                    new ConfirmationWindow(BlingeLogin.this,"Error",message,"OK","");
                 }
 
             }

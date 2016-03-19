@@ -1,5 +1,4 @@
 <LinearLayout
-    android:id="@+id/et_username"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -13,7 +12,7 @@
 
         <EditText
             android:hint="@string/prompt_email"
-            android:id="@+id/email"
+            android:id="@+id/et_username"
             android:inputType="number"
             android:maxLength="10"
             android:layout_height="wrap_content"

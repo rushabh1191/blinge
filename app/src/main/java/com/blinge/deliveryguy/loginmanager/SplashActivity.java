@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.blinge.deliveryguy.BlingeBaseActivity;
-import com.blinge.deliveryguy.postlogin.BlingeLandingPage;
+import com.blinge.deliveryguy.ordermanager.BlingeLandingPage;
 import com.blinge.deliveryguy.R;
 import com.parse.ParseUser;
 

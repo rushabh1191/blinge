@@ -16,5 +16,7 @@
         completions."
     </string>
     <string name="title_activity_blinge_base">BlingeBaseActivity</string>
-    <string name="title_activity_blinge_landing_page">BlingeLandingPage</string>
+    <string name="title_activity_blinge_landing_page">Order Information</string>
+    <string name="title_activity_show_order_list">List Of Orders</string>
+    <string name="action_settings">Settings</string>
 </resources>

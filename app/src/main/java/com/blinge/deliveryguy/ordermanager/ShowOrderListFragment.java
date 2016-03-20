@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.blinge.deliveryguy.R;
 import com.blinge.deliveryguy.helpers.BlingeRecycleView;
+import com.blinge.deliveryguy.helpers.BlingeUtilities;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -102,7 +103,14 @@ public class ShowOrderListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        fetchOrderList(type, status);
+        if(BlingeUtilities.isNetworkAvailable(getActivity())) {
+            fetchOrderList(type, status);
+        }
+        else {
+            BlingeUtilities.showNetworkNotAvailableDialog(getActivity());
+            pbEmptyView.setVisibility(View.GONE);
+            tvEmptyView.setText("No Internet");
+        }
     }
 
     @Override

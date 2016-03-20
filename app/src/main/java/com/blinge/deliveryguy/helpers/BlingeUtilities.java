@@ -3,6 +3,8 @@ package com.blinge.deliveryguy.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 
 import com.blinge.deliveryguy.R;
@@ -24,6 +26,30 @@ public class BlingeUtilities {
         boolean isgpsEnabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
         return isgpsEnabled;
+    }
+
+    public static void showNetworkNotAvailableDialog(Context context) {
+
+        new ConfirmationWindow(context, "Network unavailable", "Please check your network connection", "Ok", "");
+    }
+    public static boolean isNetworkAvailable(Context context) {
+        try {
+            ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo[] info = connectivity.getAllNetworkInfo();
+                if (info != null)
+                    for (int i = 0; i < info.length; i++)
+                        if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                            return true;
+                        }
+
+            }
+        } catch (Exception e)
+
+        {
+
+        }
+        return false;
     }
 
     public static void callHelpline(Context context){

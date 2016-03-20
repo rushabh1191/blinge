@@ -25,7 +25,7 @@ public class OrderDetailsActivity extends BlingeBaseActivity {
 
     OrderInformation orderInformation;
 
-    static String ARG_ORDER_INFO="order_info";
+    static String ARG_ORDER_INFO = "order_info";
 
     @Bind(R.id.nv_order_customer_name)
     NameValueView nvCustomerName;
@@ -46,28 +46,27 @@ public class OrderDetailsActivity extends BlingeBaseActivity {
 
         enableBackpress();
         ButterKnife.bind(this);
-        Bundle bundle=getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
 
-        ParseProxyObject parseProxyObject=
+        ParseProxyObject parseProxyObject =
                 (ParseProxyObject) bundle.getSerializable(ARG_ORDER_INFO);
-        orderInformation= new OrderInformation(parseProxyObject);
+        orderInformation = new OrderInformation(parseProxyObject);
 
-        if(orderInformation.getOrderType().equals(OrderInformation.TYPE_PICKUP)){
+        if (orderInformation.getOrderType().equals(OrderInformation.TYPE_PICKUP)) {
             btnDelivered.setText("Product Picked");
         }
 
-        if(orderInformation.getOrderStatus().equals(OrderInformation.STATUS_COMPLETED)){
+        if (orderInformation.getOrderStatus().equals(OrderInformation.STATUS_COMPLETED)) {
             btnDelivered.setEnabled(false);
             String text;
 
 
-            if(orderInformation.getOrderType().equals(OrderInformation.TYPE_PICKUP)){
+            if (orderInformation.getOrderType().equals(OrderInformation.TYPE_PICKUP)) {
 
-                text="Order Picked Up From Customer";
-            }
-            else {
+                text = "Order Picked Up From Customer";
+            } else {
 
-                text="Order Already delivered to customer";
+                text = "Order Already delivered to customer";
             }
             btnDelivered.setText(text);
         }
@@ -78,52 +77,56 @@ public class OrderDetailsActivity extends BlingeBaseActivity {
     }
 
     @OnClick(R.id.btn_update_status)
-    void updateStatus(){
+    void updateStatus() {
 
-        final ProgressDialog progressDialog=ProgressDialog.show(this,"","Updating the status");
+        final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Updating the status");
 
 
         orderInformation.setOrderStatus(OrderInformation.STATUS_COMPLETED);
 
-        orderInformation.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
+        if (BlingeUtilities.isNetworkAvailable(this)) {
+            orderInformation.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
 
-                progressDialog.dismiss();
-                if (e == null) {
-                    Snackbar snackbar = Snackbar.make(tvCustomerNumber, "Status Updated", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    snackbar.setCallback(new Snackbar.Callback() {
-                        @Override
-                        public void onDismissed(Snackbar snackbar, int event) {
-                            super.onDismissed(snackbar, event);
-                            finish();
-                        }
+                    progressDialog.dismiss();
+                    if (e == null) {
+                        Snackbar snackbar = Snackbar.make(tvCustomerNumber, "Status Updated", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        snackbar.setCallback(new Snackbar.Callback() {
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                super.onDismissed(snackbar, event);
+                                finish();
+                            }
 
-                        @Override
-                        public void onShown(Snackbar snackbar) {
-                            super.onShown(snackbar);
-                        }
-                    });
-                } else {
-                    new ConfirmationWindow(OrderDetailsActivity.this,"Error",
-                            "Please check your network connection","OK","");
+                            @Override
+                            public void onShown(Snackbar snackbar) {
+                                super.onShown(snackbar);
+                            }
+                        });
+                    } else {
+                        new ConfirmationWindow(OrderDetailsActivity.this, "Error",
+                                "Please check your network connection", "OK", "");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            BlingeUtilities.showNetworkNotAvailableDialog(this);
+        }
     }
 
     @OnClick(R.id.tv_customer_number)
-    void callUser(){
-        BlingeUtilities.call(orderInformation.getCustomerNumber(),this);
+    void callUser() {
+        BlingeUtilities.call(orderInformation.getCustomerNumber(), this);
     }
 
-    public static Intent getIntentToStartActivity(OrderInformation orderInformation,Context context){
-        ParseProxyObject parseProxyObject=new ParseProxyObject(orderInformation);
-        Bundle bundle=new Bundle();
+    public static Intent getIntentToStartActivity(OrderInformation orderInformation, Context context) {
+        ParseProxyObject parseProxyObject = new ParseProxyObject(orderInformation);
+        Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_ORDER_INFO, parseProxyObject);
-        Intent intent=new Intent(context,OrderDetailsActivity.class);
-        intent.putExtra(ARG_ORDER_INFO,parseProxyObject);
+        Intent intent = new Intent(context, OrderDetailsActivity.class);
+        intent.putExtra(ARG_ORDER_INFO, parseProxyObject);
         return intent;
 
     }

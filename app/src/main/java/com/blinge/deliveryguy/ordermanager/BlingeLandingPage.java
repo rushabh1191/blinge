@@ -44,6 +44,10 @@ public class BlingeLandingPage extends BlingeBaseActivity {
         setContentView(R.layout.activity_blinge_landing_page);
         ButterKnife.bind(this);
 
+        if(!BlingeUtilities.isNetworkAvailable(this)){
+            BlingeUtilities.showNetworkNotAvailableDialog(this);
+        }
+
         setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_PENDING, btnPendingDelivery, "Pending Deliveries");
         setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_PENDING, btnPendingPickup,"Pending Pickups");
         setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedDelivery,"Completed Deliveries");
@@ -146,7 +150,7 @@ public class BlingeLandingPage extends BlingeBaseActivity {
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int count, ParseException e) {
-                if(e!=null) {
+                if(e==null) {
                     btn.setText(textToBeShown + "(" + count + ")");
                 }
             }

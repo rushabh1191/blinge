@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 
+import com.blinge.deliveryguy.helpers.Logger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -135,9 +136,11 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
 
     @Override
     public void onLocationChanged(Location location) {
+        Logger.log("beta","Sending update received");
         if(location!=null) {
             ParseGeoPoint point = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
             if (ParseUser.getCurrentUser() != null) {
+                Logger.log("beta","Sending location");
                 String userId = ParseUser.getCurrentUser().getObjectId();
                 ParseObject query = ParseObject.create("_User");
                 query.setObjectId(userId);

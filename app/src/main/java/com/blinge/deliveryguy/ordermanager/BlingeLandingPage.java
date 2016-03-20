@@ -68,12 +68,10 @@ public class BlingeLandingPage extends BlingeBaseActivity {
     }
 
     void startLocationService(){
-        if(BlingeUtilities.isGPSEnabled(this)) {
-            Intent intent = new Intent(this, LocationService.class);
-            startService(intent);
-        }
-        else {
-
+        Intent intent = new Intent(this, LocationService.class);
+        startService(intent);
+        if(!BlingeUtilities.isGPSEnabled(this)) {
+            showStartGSPDialog();
         }
 
     }
@@ -115,6 +113,20 @@ public class BlingeLandingPage extends BlingeBaseActivity {
             }
         };
 
+    }
+
+    void showStartGSPDialog() {
+
+        new ConfirmationWindow(this, "GPS is disabled", "Please enable " +
+                "GPS to detect your location", "OK", "") {
+            @Override
+            protected void setPositiveResponse() {
+                super.setPositiveResponse();
+                Intent callGPSSettingIntent = new Intent(
+                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(callGPSSettingIntent);
+            }
+        };
     }
 
     void setTag(String type, String status, Button btn,String title) {

@@ -1,15 +1,20 @@
 package com.blinge.deliveryguy.ordermanager;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.blinge.deliveryguy.BlingeBaseActivity;
 import com.blinge.deliveryguy.R;
+import com.blinge.deliveryguy.helpers.BlingeUtilities;
 import com.blinge.deliveryguy.helpers.ConfirmationWindow;
+import com.blinge.deliveryguy.helpers.PermissionHelper;
 import com.blinge.deliveryguy.loginmanager.BlingeLogin;
+import com.blinge.deliveryguy.task.LocationService;
 import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -22,6 +27,7 @@ import butterknife.OnClick;
 public class BlingeLandingPage extends BlingeBaseActivity {
 
 
+    private static final int LOCATION_PERMISSION = 1;
     @Bind(R.id.btn_pending_delivery)
     Button btnPendingDelivery;
     @Bind(R.id.btn_pending_pickup)
@@ -38,25 +44,50 @@ public class BlingeLandingPage extends BlingeBaseActivity {
         setContentView(R.layout.activity_blinge_landing_page);
         ButterKnife.bind(this);
 
-        setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_PENDING, btnPendingDelivery,"Pending Deliveries");
+        setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_PENDING, btnPendingDelivery, "Pending Deliveries");
         setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_PENDING, btnPendingPickup,"Pending Pickups");
         setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedDelivery,"Completed Deliveries");
-        setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_COMPLETED, btnCompletedPickup,"Completed Pickups");
+        setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_COMPLETED, btnCompletedPickup, "Completed Pickups");
 
+        if(!PermissionHelper.isPermitted(Manifest.permission.ACCESS_FINE_LOCATION,this)) {
+            PermissionHelper.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION,
+                    "Allow location permission", LOCATION_PERMISSION);
+        }
+        else {
+            startLocationService();
+        }
 
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            startLocationService();
+        }
+    }
+
+    void startLocationService(){
+        if(BlingeUtilities.isGPSEnabled(this)) {
+            Intent intent = new Intent(this, LocationService.class);
+            startService(intent);
+        }
+        else {
+
+        }
+
+    }
+    @Override
     protected void onStart() {
         super.onStart();
         getCount(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_PENDING, btnPendingDelivery
-                ,"Pending Deliveries");
+                , "Pending Deliveries");
         getCount(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_PENDING, btnPendingPickup
-                ,"Pending Pickups");
+                , "Pending Pickups");
         getCount(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedDelivery
-                ,"Completed Deliveries");
+                , "Completed Deliveries");
         getCount(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_COMPLETED, btnCompletedPickup
-                ,"Completed Pickups");
+                , "Completed Pickups");
     }
 
     @OnClick({R.id.btn_completed_pickup, R.id.btn_completed_delivery, R.id.btn_pending_pickup, R.id.btn_pending_delivery})

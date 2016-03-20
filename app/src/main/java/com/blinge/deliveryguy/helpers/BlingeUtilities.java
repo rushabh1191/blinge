@@ -2,6 +2,7 @@ package com.blinge.deliveryguy.helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 
 import com.blinge.deliveryguy.R;
@@ -15,6 +16,14 @@ public class BlingeUtilities {
         Intent intent=new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + number));
         context.startActivity(intent);
+    }
+
+    public static boolean isGPSEnabled(Context context){
+        final LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        boolean isgpsEnabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        return isgpsEnabled;
     }
 
     public static void callHelpline(Context context){

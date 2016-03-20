@@ -22,14 +22,15 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class ShowOrderListFragment extends Fragment {
 
-    public static final String ARG_TYPE="type";
-    public static final String ARG_STATUS="status";
-    public static final String ARG_TITLE="title";
+    public static final String ARG_TYPE = "type";
+    public static final String ARG_STATUS = "status";
+    public static final String ARG_TITLE = "title";
 
     String type;
     String status;
@@ -45,44 +46,50 @@ public class ShowOrderListFragment extends Fragment {
 
     OrderListAdapter adapter;
 
-    ArrayList<OrderInformation> orderList=new ArrayList<>();
+    ArrayList<OrderInformation> orderList = new ArrayList<>();
 
 
     public ShowOrderListFragment() {
     }
 
-    public static ShowOrderListFragment getInstance(Bundle bundle){
-        ShowOrderListFragment fragment=new ShowOrderListFragment();
+    public static ShowOrderListFragment getInstance(Bundle bundle) {
+        ShowOrderListFragment fragment = new ShowOrderListFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public static ShowOrderListFragment getInstance(String type,String status,String title){
+    public static ShowOrderListFragment getInstance(String type, String status, String title) {
 
-        Bundle bundle=new Bundle();
-        bundle.putString(ARG_TYPE,type);
+        Bundle bundle = new Bundle();
+        bundle.putString(ARG_TYPE, type);
         bundle.putString(ARG_STATUS, status);
-        bundle.putString(ARG_TITLE,title);
+        bundle.putString(ARG_TITLE, title);
         return getInstance(bundle);
 
     }
 
 
-    void fetchOrderList(String type,String status){
+    void fetchOrderList(String type, String status) {
 
-        ParseQuery<OrderInformation> query=ParseQuery.getQuery(OrderInformation.class);
-        query.whereEqualTo("orderStatus",status);
-        query.whereEqualTo("orderType",type);
+        ParseQuery<OrderInformation> query = ParseQuery.getQuery(OrderInformation.class);
+        query.whereEqualTo("orderStatus", status);
+        query.whereEqualTo("orderType", type);
 
         query.findInBackground(new FindCallback<OrderInformation>() {
             @Override
             public void done(List<OrderInformation> objects, ParseException e) {
-                if(e==null) {
-                    orderList.clear();
-                    orderList.addAll(objects);
-                    adapter.notifyDataSetChanged();
-                    tvEmptyView.setText("Nothing to show");
-                    pbEmptyView.setVisibility(View.GONE);
+                if (e == null) {
+                    try {
+
+                        orderList.clear();
+                        orderList.addAll(objects);
+                        adapter.notifyDataSetChanged();
+
+                        tvEmptyView.setText("Nothing to show");
+                        pbEmptyView.setVisibility(View.GONE);
+                    } catch (Exception ex) {
+
+                    }
                 }
             }
         });
@@ -92,7 +99,7 @@ public class ShowOrderListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        fetchOrderList(type,status);
+        fetchOrderList(type, status);
     }
 
     @Override
@@ -100,15 +107,15 @@ public class ShowOrderListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_show_order_list, container, false);
 
-        ButterKnife.bind(this,view);
-        Bundle bundle=getArguments();
-        type=bundle.getString(ARG_TYPE);
-        status=bundle.getString(ARG_STATUS);
-        title=bundle.getString(ARG_TITLE);
+        ButterKnife.bind(this, view);
+        Bundle bundle = getArguments();
+        type = bundle.getString(ARG_TYPE);
+        status = bundle.getString(ARG_STATUS);
+        title = bundle.getString(ARG_TITLE);
 
         getActivity().setTitle(title);
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter=new OrderListAdapter(orderList,getActivity());
+        adapter = new OrderListAdapter(orderList, getActivity());
 
         recycleView.setAdapter(adapter);
 
@@ -122,4 +129,6 @@ public class ShowOrderListFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }

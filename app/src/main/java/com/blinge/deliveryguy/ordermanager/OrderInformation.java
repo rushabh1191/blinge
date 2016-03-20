@@ -1,6 +1,7 @@
 package com.blinge.deliveryguy.ordermanager;
 
 import com.blinge.deliveryguy.helpers.BlingeParseObject;
+import com.blinge.deliveryguy.helpers.ParseProxyObject;
 import com.parse.ParseClassName;
 
 /**
@@ -23,6 +24,12 @@ public class OrderInformation extends BlingeParseObject {
     String orderType;
     private int productName;
 
+    public OrderInformation(){
+
+    }
+    public OrderInformation(ParseProxyObject object){
+        super(object);
+    }
     public String getCustomerName() {
         return getData("customerName");
     }
@@ -53,7 +60,7 @@ public class OrderInformation extends BlingeParseObject {
     }
 
     public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+        put("orderStatus",orderStatus);
     }
 
     public String getOrderType() {

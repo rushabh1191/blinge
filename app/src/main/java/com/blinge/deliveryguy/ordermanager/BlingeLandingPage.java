@@ -52,7 +52,7 @@ public class BlingeLandingPage extends BlingeBaseActivity {
                 ,"Pending Pickups");
         getCount(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedDelivery
                 ,"Completed Deliveries");
-        getCount(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedPickup
+        getCount(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_COMPLETED, btnCompletedPickup
                 ,"Completed Pickups");
     }
 

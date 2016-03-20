@@ -22,6 +22,7 @@ public class BlingeParseObject extends ParseObject {
         for (String key : hashMap.keySet()) {
             Class classType = hashMap.get(key).getClass();
             if (classType == byte[].class || classType == String.class || classType == Float.class ||
+                  classType==Long.class||
                     classType == Integer.class || classType == Boolean.class || classType == HashMap.class) {
                 put(key, hashMap.get(key));
             } else if (classType == ParseUser.class) {

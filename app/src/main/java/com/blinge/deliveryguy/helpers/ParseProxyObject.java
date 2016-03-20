@@ -24,8 +24,10 @@ public class ParseProxyObject implements Serializable {
         for(String key : object.keySet()) {
             @SuppressWarnings("rawtypes")
             Class classType = object.get(key).getClass();
-            if(classType == byte[].class || classType == String.class || classType == Float.class ||
-                    classType == Integer.class || classType == Boolean.class || classType == HashMap.class) {
+            if(classType == byte[].class ||
+                    classType == String.class || classType == Float.class ||
+                   classType==Long.class || classType == Integer.class ||
+                    classType == Boolean.class || classType == HashMap.class) {
                 values.put(key, object.get(key));
             } else if(classType == ParseUser.class) {
                 ParseProxyObject parseUserObject = new ParseProxyObject((ParseObject)object.get(key));

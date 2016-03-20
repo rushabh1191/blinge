@@ -18,6 +18,7 @@ public class ShowOrderListActivity extends BlingeBaseActivity {
         Bundle bundle=getIntent().getExtras();
         ShowOrderListFragment fragment=ShowOrderListFragment.getInstance(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment).commit();
+        enableBackpress();
 
     }
 

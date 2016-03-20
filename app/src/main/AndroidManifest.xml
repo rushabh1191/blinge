@@ -24,7 +24,7 @@
 
         <activity
             android:name=".loginmanager.BlingeLogin"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <activity
             android:name=".BlingeBaseActivity"
             android:label="@string/title_activity_blinge_base"
@@ -39,11 +39,12 @@
         <activity
             android:name=".ordermanager.BlingeLandingPage"
             android:label="@string/title_activity_blinge_landing_page"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ordermanager.ShowOrderListActivity"
             android:label="@string/title_activity_show_order_list"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ordermanager.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>

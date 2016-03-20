@@ -79,12 +79,13 @@ public class OrderDetailsActivity extends BlingeBaseActivity {
     @OnClick(R.id.btn_update_status)
     void updateStatus() {
 
-        final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Updating the status");
+
 
 
         orderInformation.setOrderStatus(OrderInformation.STATUS_COMPLETED);
 
         if (BlingeUtilities.isNetworkAvailable(this)) {
+            final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Updating the status");
             orderInformation.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {

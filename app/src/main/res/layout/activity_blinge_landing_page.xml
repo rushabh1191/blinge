@@ -26,4 +26,11 @@
         android:id="@+id/btn_completed_pickup"
         android:text="Completed Pickups" />
 
+    <Button
+        style="@style/landing_button"
+        android:id="@+id/btn_logout"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_red_dark"
+        android:text="Logout" />
+
 </LinearLayout>

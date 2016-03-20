@@ -8,9 +8,12 @@ import android.widget.Button;
 
 import com.blinge.deliveryguy.BlingeBaseActivity;
 import com.blinge.deliveryguy.R;
+import com.blinge.deliveryguy.helpers.ConfirmationWindow;
+import com.blinge.deliveryguy.loginmanager.BlingeLogin;
 import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,6 +65,23 @@ public class BlingeLandingPage extends BlingeBaseActivity {
         String tag[] = getTag(view);
         Intent intent = ShowOrderListActivity.getIntentToStartActivity(tag[1], tag[0], this,tag[2]);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_logout)
+    void logout(){
+
+        new ConfirmationWindow(this,"Confirm Logout","Are you sure you want to logout","OK","Cancel"){
+
+            @Override
+            protected void setPositiveResponse() {
+                super.setPositiveResponse();
+                ParseUser.logOut();
+                finish();
+                Intent intent=new Intent(BlingeLandingPage.this, BlingeLogin.class);
+                startActivity(intent);
+            }
+        };
+
     }
 
     void setTag(String type, String status, Button btn,String title) {

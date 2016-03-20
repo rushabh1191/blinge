@@ -1,14 +1,14 @@
 package com.blinge.deliveryguy.ordermanager;
 
+import com.blinge.deliveryguy.helpers.BlingeParseObject;
 import com.parse.ParseClassName;
-import com.parse.ParseObject;
 
 /**
  * Created by rushabh on 19/03/16.
  */
 
 @ParseClassName("OrdersInformation")
-public class OrderInformation extends ParseObject {
+public class OrderInformation extends BlingeParseObject {
 
     public static String TYPE_PICKUP="pickup";
     public static String TYPE_DELIVER="deliver";

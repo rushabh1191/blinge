@@ -35,10 +35,10 @@ public class BlingeLandingPage extends BlingeBaseActivity {
         setContentView(R.layout.activity_blinge_landing_page);
         ButterKnife.bind(this);
 
-        setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_PENDING, btnPendingDelivery);
-        setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_PENDING, btnPendingPickup);
-        setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedDelivery);
-        setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_COMPLETED, btnCompletedPickup);
+        setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_PENDING, btnPendingDelivery,"Pending Deliveries");
+        setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_PENDING, btnPendingPickup,"Pending Pickups");
+        setTag(OrderInformation.TYPE_DELIVER, OrderInformation.STATUS_COMPLETED, btnCompletedDelivery,"Completed Deliveries");
+        setTag(OrderInformation.TYPE_PICKUP, OrderInformation.STATUS_COMPLETED, btnCompletedPickup,"Completed Pickups");
 
 
     }
@@ -60,12 +60,12 @@ public class BlingeLandingPage extends BlingeBaseActivity {
     void showOrderList(View view) {
 
         String tag[] = getTag(view);
-        Intent intent = ShowOrderListActivity.getIntentToStartActivity(tag[1], tag[0], this);
+        Intent intent = ShowOrderListActivity.getIntentToStartActivity(tag[1], tag[0], this,tag[2]);
         startActivity(intent);
     }
 
-    void setTag(String type, String status, Button btn) {
-        btn.setTag(type + ":" + status);
+    void setTag(String type, String status, Button btn,String title) {
+        btn.setTag(type + ":" + status+":"+title);
     }
 
     String[] getTag(View btn) {

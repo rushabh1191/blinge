@@ -29,9 +29,11 @@ public class ShowOrderListFragment extends Fragment {
 
     public static final String ARG_TYPE="type";
     public static final String ARG_STATUS="status";
+    public static final String ARG_TITLE="title";
 
     String type;
     String status;
+    String title;
 
     @Bind(R.id.recycler_view)
     BlingeRecycleView recycleView;
@@ -45,6 +47,7 @@ public class ShowOrderListFragment extends Fragment {
 
     ArrayList<OrderInformation> orderList=new ArrayList<>();
 
+
     public ShowOrderListFragment() {
     }
 
@@ -54,11 +57,12 @@ public class ShowOrderListFragment extends Fragment {
         return fragment;
     }
 
-    public static ShowOrderListFragment getInstance(String type,String status){
+    public static ShowOrderListFragment getInstance(String type,String status,String title){
 
         Bundle bundle=new Bundle();
         bundle.putString(ARG_TYPE,type);
         bundle.putString(ARG_STATUS, status);
+        bundle.putString(ARG_TITLE,title);
         return getInstance(bundle);
 
     }
@@ -100,7 +104,9 @@ public class ShowOrderListFragment extends Fragment {
         Bundle bundle=getArguments();
         type=bundle.getString(ARG_TYPE);
         status=bundle.getString(ARG_STATUS);
+        title=bundle.getString(ARG_TITLE);
 
+        getActivity().setTitle(title);
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new OrderListAdapter(orderList,getActivity());
 

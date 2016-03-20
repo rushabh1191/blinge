@@ -21,10 +21,11 @@ public class ShowOrderListActivity extends BlingeBaseActivity {
 
     }
 
-    public static Intent getIntentToStartActivity(String status,String type,Context context){
+    public static Intent getIntentToStartActivity(String status,String type,Context context,String title){
         Intent intent=new Intent(context,ShowOrderListActivity.class);
         intent.putExtra(ShowOrderListFragment.ARG_STATUS,status);
         intent.putExtra(ShowOrderListFragment.ARG_TYPE,type);
+        intent.putExtra(ShowOrderListFragment.ARG_TITLE,title);
         return intent;
     }
 

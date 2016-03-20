@@ -41,9 +41,6 @@ public class BlingeLogin extends BlingeBaseActivity {
     TextInputLayout tilPassword;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

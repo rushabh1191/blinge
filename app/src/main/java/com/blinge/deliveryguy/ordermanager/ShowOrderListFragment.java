@@ -78,18 +78,21 @@ public class ShowOrderListFragment extends Fragment {
         query.findInBackground(new FindCallback<OrderInformation>() {
             @Override
             public void done(List<OrderInformation> objects, ParseException e) {
-                if (e == null) {
-                    try {
-
+                try {
+                    pbEmptyView.setVisibility(View.GONE);
+                    if (e == null) {
                         orderList.clear();
                         orderList.addAll(objects);
                         adapter.notifyDataSetChanged();
 
                         tvEmptyView.setText("Nothing to show");
-                        pbEmptyView.setVisibility(View.GONE);
-                    } catch (Exception ex) {
 
                     }
+                    else {
+                        tvEmptyView.setText("Check your network connection");
+                    }
+                } catch (Exception ex) {
+
                 }
             }
         });

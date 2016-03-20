@@ -134,7 +134,9 @@ public class BlingeLandingPage extends BlingeBaseActivity {
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int count, ParseException e) {
-                btn.setText(textToBeShown + "(" + count + ")");
+                if(e!=null) {
+                    btn.setText(textToBeShown + "(" + count + ")");
+                }
             }
         });
     }

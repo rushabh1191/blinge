@@ -113,7 +113,7 @@ public class BlingeLandingPage extends BlingeBaseActivity {
                 Intent intent=new Intent(BlingeLandingPage.this, BlingeLogin.class);
                 startActivity(intent);
 
-                stopService(new Intent(BlingeLandingPage.this,LocationService.class));
+                stopService(new Intent(BlingeLandingPage.this, LocationService.class));
             }
         };
 
@@ -142,19 +142,23 @@ public class BlingeLandingPage extends BlingeBaseActivity {
     }
 
     void getCount(String type, String status, final Button btn, final String textToBeShown) {
-        ParseQuery query = ParseQuery.getQuery(OrderInformation.class);
-        query.whereEqualTo("orderStatus", status);
-        query.whereEqualTo("orderType", type);
+        try {
+            ParseQuery query = ParseQuery.getQuery(OrderInformation.class);
+            query.whereEqualTo("orderStatus", status);
+            query.whereEqualTo("orderType", type);
 
 
-        query.countInBackground(new CountCallback() {
-            @Override
-            public void done(int count, ParseException e) {
-                if(e==null) {
-                    btn.setText(textToBeShown + "(" + count + ")");
+            query.countInBackground(new CountCallback() {
+                @Override
+                public void done(int count, ParseException e) {
+                    if (e == null) {
+                        btn.setText(textToBeShown + "(" + count + ")");
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+
+        }
     }
 
     public static Intent getIntentToStartThisActivity(Context context) {

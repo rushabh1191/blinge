@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blinge.deliveryguy.BlingeBaseActivity;
+import com.blinge.deliveryguy.helpers.BlingeUtilities;
 import com.blinge.deliveryguy.helpers.ConfirmationWindow;
 import com.blinge.deliveryguy.R;
 import com.blinge.deliveryguy.ordermanager.BlingeLandingPage;
@@ -72,8 +73,15 @@ public class BlingeLogin extends BlingeBaseActivity {
 
         if(isValid()){
 
-            loginUserWithParse(mUserName.getText().toString().trim()
-                    ,mPassword.getText().toString().trim());
+            if(BlingeUtilities.isNetworkAvailable(this)) {
+                loginUserWithParse(mUserName.getText().toString().trim()
+                        , mPassword.getText().toString().trim());
+            }
+            else {
+
+                BlingeUtilities.showNetworkNotAvailableDialog(this);
+            }
+
         }
     }
 
@@ -127,6 +135,7 @@ public class BlingeLogin extends BlingeBaseActivity {
         if(mPassword.getText().toString().trim().equals("")){
             tilPassword.setError("Enter Password");
             tilPassword.setErrorEnabled(true);
+            return false;
         }
         return true;
     }

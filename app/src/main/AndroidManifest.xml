@@ -28,7 +28,8 @@
             android:name=".BlingeBaseActivity"
             android:label="@string/title_activity_blinge_base"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".loginmanager.SplashActivity">
+        <activity android:name=".loginmanager.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

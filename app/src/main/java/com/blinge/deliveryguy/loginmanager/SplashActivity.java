@@ -2,6 +2,7 @@ package com.blinge.deliveryguy.loginmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.blinge.deliveryguy.BlingeBaseActivity;
 import com.blinge.deliveryguy.ordermanager.BlingeLandingPage;
@@ -15,6 +16,16 @@ public class SplashActivity extends BlingeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+       new Handler().postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               initializeApp();
+           }
+       },3000);
+
+    }
+
+    void initializeApp(){
         Class activityToBeLoaded;
         if(ParseUser.getCurrentUser()==null){
 
@@ -27,6 +38,5 @@ public class SplashActivity extends BlingeBaseActivity {
         Intent intent=new Intent(this,activityToBeLoaded);
         startActivity(intent);
         finish();
-
     }
 }

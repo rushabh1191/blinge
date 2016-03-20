@@ -110,6 +110,8 @@ public class BlingeLandingPage extends BlingeBaseActivity {
                 finish();
                 Intent intent=new Intent(BlingeLandingPage.this, BlingeLogin.class);
                 startActivity(intent);
+
+                stopService(new Intent(BlingeLandingPage.this,LocationService.class));
             }
         };
 

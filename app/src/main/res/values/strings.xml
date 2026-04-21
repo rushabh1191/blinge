@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Blinge TV</string>
+    <string name="row_text">Text</string>
+    <string name="row_images">Images</string>
+    <string name="row_text_images">Text &amp; Images</string>
+</resources>

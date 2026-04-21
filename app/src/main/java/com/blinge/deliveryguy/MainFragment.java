@@ -1,6 +1,8 @@
 package com.blinge.deliveryguy;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import androidx.annotation.Nullable;
 import androidx.leanback.app.BrowseSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -8,13 +10,21 @@ import androidx.leanback.widget.HeaderItem;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import com.blinge.deliveryguy.model.ImageItem;
+import com.blinge.deliveryguy.model.NoticeItem;
 import com.blinge.deliveryguy.model.TextImageItem;
 import com.blinge.deliveryguy.model.TextItem;
 import com.blinge.deliveryguy.presenter.ImageCardPresenter;
+import com.blinge.deliveryguy.presenter.NoticeCardPresenter;
 import com.blinge.deliveryguy.presenter.TextCardPresenter;
 import com.blinge.deliveryguy.presenter.TextImageCardPresenter;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainFragment extends BrowseSupportFragment {
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,6 +34,12 @@ public class MainFragment extends BrowseSupportFragment {
         setHeadersTransitionOnBackEnabled(true);
         setBrandColor(getResources().getColor(R.color.colorPrimary, null));
         loadRows();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        executor.shutdownNow();
     }
 
     private void loadRows() {
@@ -66,6 +82,20 @@ public class MainFragment extends BrowseSupportFragment {
                 "https://picsum.photos/seed/ti5/400/225"));
         rowsAdapter.add(new ListRow(new HeaderItem(2, getString(R.string.row_text_images)), textImageAdapter));
 
+        // Row 4: Society Notices (fetched from Gmail server)
+        ArrayObjectAdapter noticeAdapter = new ArrayObjectAdapter(new NoticeCardPresenter());
+        rowsAdapter.add(new ListRow(new HeaderItem(3, getString(R.string.row_notices)), noticeAdapter));
+
         setAdapter(rowsAdapter);
+
+        String apiUrl = getString(R.string.notices_api_url);
+        executor.execute(() -> {
+            try {
+                List<NoticeItem> notices = NoticeRepository.fetchNotices(apiUrl);
+                mainHandler.post(() -> noticeAdapter.addAll(notices));
+            } catch (Exception ignored) {
+                // Server unreachable — row stays empty, no crash
+            }
+        });
     }
 }

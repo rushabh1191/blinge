@@ -4,4 +4,7 @@
     <string name="row_text">Text</string>
     <string name="row_images">Images</string>
     <string name="row_text_images">Text &amp; Images</string>
+    <string name="row_notices">Society Notices</string>
+    <!-- Change this to your server IP/hostname before running on a real device -->
+    <string name="notices_api_url">http://10.0.2.2:3000/api/notices</string>
 </resources>
